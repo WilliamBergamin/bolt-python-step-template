@@ -36,6 +36,7 @@ tmp.txt
 logs/
 *.db
 .pytype/
+.vscode
 
 #tmp
 .slack/apps.dev.json
