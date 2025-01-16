@@ -8,7 +8,7 @@ from slack_bolt import Ack, Complete
 from .utils import OptionSelect
 
 
-def fetch_dinosaur_names(filter="", data_path="db/dinosaur_names.csv"):
+def fetch_dinosaur_names(filter="", data_path="db/dinosaur_names.csv") -> List[str]:
     matcher = re.compile(filter, re.I)
     dino_names = []
     with open(data_path) as csv_file:

@@ -1,4 +1,4 @@
-name: Linting validation using ruff
+name: Validate types with mypy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  mypy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
@@ -23,6 +23,6 @@ jobs:
         run: |
           pip install -U pip
           pip install -r requirements.txt
-      - name: Lint with ruff
+      - name: Test with pytest
         run: |
-          ruff check
+          mypy --config-file pyproject.toml

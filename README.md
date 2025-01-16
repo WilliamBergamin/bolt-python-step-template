@@ -75,6 +75,12 @@ Run all tests with:
 pytest tests/
 ```
 
+#### Type checking
+
+```zsh
+mypy --config-file pyproject.toml
+```
+
 ## Using Steps in Workflow Builder
 
 With your server running, your function is now ready for use in
@@ -84,5 +90,3 @@ is running.
 
 For more information on creating workflows and adding custom steps, read more
 [here](https://slack.com/help/articles/17542172840595-Create-a-new-workflow-in-Slack).
-
-## Project Structure
