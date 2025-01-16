@@ -1,5 +1,7 @@
 import logging
-from unittest import mock
+from unittest.mock import Mock, patch
+
+from slack_bolt import Ack, Complete
 
 from listeners.functions import get_dino_characteristics
 from listeners.functions.utils import OptionSelect
@@ -18,12 +20,14 @@ class TestGetDinoNames:
         expected = [self.test_dino_options]
         assert actual == expected
 
-    def test_handle_get_dino_names(self):
-        fake_ack = mock.Mock()
-        fake_complete = mock.Mock()
-        get_dino_characteristics.get_dino_type_options = mock.Mock(
-            return_value=[self.test_dino_options]
-        )
+    @patch(
+        "listeners.functions.get_dino_characteristics.get_dino_type_options",
+        spec=get_dino_characteristics.get_dino_type_options,
+    )
+    def test_handle_get_dino_names(self, fake_get_dino_type_options: Mock):
+        fake_ack = Mock(Ack)
+        fake_complete = Mock(Complete)
+        fake_get_dino_type_options.return_value = [self.test_dino_options]
 
         get_dino_characteristics.handle_get_dino_characteristics(
             fake_ack, fake_complete, test_logger

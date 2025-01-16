@@ -1,5 +1,7 @@
 import logging
-from unittest import mock
+from unittest.mock import Mock, patch
+
+from slack_bolt import Ack, Complete
 
 from listeners.functions import get_dino_names
 
@@ -21,21 +23,30 @@ class TestGetDinoNames:
         actual = get_dino_names.fetch_dinosaur_names(filter="bi", data_path=self.test_data_path)
         assert actual == ["Bill"]
 
-    def test_handle_get_dino_names(self):
-        fake_ack = mock.Mock()
-        fake_complete = mock.Mock()
-        get_dino_names.fetch_dinosaur_names = mock.Mock(return_value=[])
+    @patch(
+        "listeners.functions.get_dino_names.fetch_dinosaur_names",
+        spec=get_dino_names.fetch_dinosaur_names,
+    )
+    def test_handle_get_dino_names(self, fake_fetch_dinosaur_names):
+        fake_ack = Mock(Ack)
+        fake_complete = Mock(Complete)
+        fake_fetch_dinosaur_names.return_value = []
 
         get_dino_names.handle_get_dino_names(fake_ack, {"query": ""}, fake_complete, test_logger)
 
         fake_ack.assert_called_once()
-        fake_complete.assert_called_once_with(outputs={"options": []})
+        fake_complete.assert_called_once()
+        _, kwargs = fake_complete.call_args
+        assert kwargs == {"outputs": {"options": []}}
 
-    def test_handle_get_dino_names_crop_length(self):
-        fake_ack = mock.Mock()
-        fake_complete = mock.Mock()
-        test_dino_names = ["dinosaur"] * 1002
-        get_dino_names.fetch_dinosaur_names = mock.Mock(return_value=test_dino_names)
+    @patch(
+        "listeners.functions.get_dino_names.fetch_dinosaur_names",
+        spec=get_dino_names.fetch_dinosaur_names,
+    )
+    def test_handle_get_dino_names_crop_length(self, fake_fetch_dinosaur_names: Mock):
+        fake_ack = Mock(Ack)
+        fake_complete = Mock(Complete)
+        fake_fetch_dinosaur_names.return_value = ["dinosaur"] * 1002
 
         get_dino_names.handle_get_dino_names(fake_ack, {"query": ""}, fake_complete, test_logger)
 
