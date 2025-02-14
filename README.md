@@ -1,4 +1,4 @@
-# Bolt for Python Template Steps
+# Bolt for Python steps template
 
 This is a generic Bolt for Python template app used to build out Slack custom steps.
 
@@ -27,20 +27,16 @@ Before you can run the app, you'll need to store some environment variables.
    the App-Level Tokens section to create an app-level token with the
    `connections:write` scope. Copy this token. You will store this in your
    environment as `SLACK_APP_TOKEN`.
-4. Follow these
-   [Jira Instruction](https://confluence.atlassian.com/adminjiraserver0909/configure-an-incoming-link-1251415519.html)
-   to create an external application and get the `Client ID` (`JIRA_CLIENT_ID`)
-   and `Client secret` (`JIRA_CLIENT_SECRET`) values.
 5. Populate the other environment variable value with proper values.
 
 ### Local Project
 
 ```zsh
 # Clone this project onto your machine
-git clone https://github.com/slack-samples/bolt-python-jira-functions.git
+git clone https://github.com/WilliamBergamin/bolt-python-step-template.git
 
 # Change into this project directory
-cd bolt-python-jira-functions
+cd bolt-python-step-template
 
 # Setup your python virtual environment
 python3 -m venv .venv
@@ -67,7 +63,7 @@ ruff check --fix
 #### Testing
 
 For an example of how to test a function, see
-`tests/functions/test_create_issue.py`.
+`tests/`.
 
 Run all tests with:
 
