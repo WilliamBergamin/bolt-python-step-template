@@ -2,6 +2,19 @@
 	"display_information": {
 		"name": "Bolt Python Step Template"
 	},
+	"features": {
+		"bot_user": {
+			"display_name": "Bolt Python Step Template",
+			"always_online": false
+		}
+	},
+	"oauth_config": {
+		"scopes": {
+			"bot": [
+				"chat:write"
+			]
+		}
+	},
 	"settings": {
 		"event_subscriptions": {
 			"bot_events": [
@@ -13,6 +26,87 @@
 		},
 		"org_deploy_enabled": true,
 		"socket_mode_enabled": true,
-		"token_rotation_enabled": false
+		"token_rotation_enabled": false,
+		"hermes_app_type": "remote",
+		"function_runtime": "remote"
+	},
+	"functions": {
+		"dino-description": {
+			"title": "Dinosaur Description",
+			"description": "Get the dinosaur description as defined by the builder of a workflow",
+			"input_parameters": {
+				"name": {
+					"type": "string",
+					"title": "Name",
+					"description": "Name of the dinosaur",
+					"is_required": true,
+					"name": "name",
+					"dynamic_options": {
+						"function": "#/functions/get-dino-names",
+						"inputs": {
+							"query": {
+								"value": "{{client.query}}"
+							}
+						}
+					}
+				},
+				"characteristics": {
+					"type": "object",
+					"title": "Characteristics",
+					"description": "characteristics of the dinosaur",
+					"is_required": true,
+					"name": "characteristics",
+					"dynamic_options": {
+						"function": "#/functions/get-dino-characteristics",
+						"inputs": {},
+						"selection_type": "key-value"
+					}
+				}
+			},
+			"output_parameters": {
+				"description": {
+					"type": "slack#/types/rich_text",
+					"title": "Description",
+					"description": "Description of the dinosaur",
+					"name": "description"
+				}
+			}
+		},
+		"get-dino-characteristics": {
+			"title": "Get the dinosaur characteristics",
+			"description": "Get the available dinosaur characteristics ",
+			"input_parameters": {},
+			"output_parameters": {
+				"options": {
+					"type": "slack#/types/options_field",
+					"title": "Options",
+					"description": "available options based on state",
+					"is_required": true,
+					"name": "options"
+				}
+			}
+		},
+		"get-dino-names": {
+			"title": "Get available dinosaur names",
+			"description": "Get all the available dinosaur names that can be used to create one",
+			"input_parameters": {
+				"query": {
+					"type": "string",
+					"title": "Query",
+					"description": "filter the return list of options",
+					"is_required": true,
+					"name": "query"
+				}
+			},
+			"output_parameters": {
+				"options": {
+					"type": "slack#/types/options_select",
+					"title": "Options",
+					"description": "available options based on inputs",
+					"is_required": true,
+					"name": "options"
+				}
+			}
+		}
 	}
 }
