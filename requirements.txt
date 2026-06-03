@@ -1,4 +1,4 @@
 slack-bolt==1.28.0
 pytest<10
 ruff<1
-mypy<1.21
+mypy<2.2
